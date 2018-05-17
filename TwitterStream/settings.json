@@ -1,0 +1,49 @@
+﻿{
+  "groups": [
+    {
+      "enabled": true,
+      "identity": "job-search",
+      "filters": [
+        ".NET hiring", // Multiple words are AND'd together. Tweet must contain all parts.
+        ".NET job", // Each individual filter is an additional OR to the overall filter.
+        ".NET remote",
+        "ASP.NET hiring",
+        "ASP.NET job",
+        "ASP.NET remote",
+        "basketball",
+      ],
+      "publishers": [ "ConsolePublisher" ]
+    },
+    {
+      "enabled": true,
+      "identity": "other-job-search",
+      "filters": [
+        "C# hiring",
+        "C# job",
+        "C# remote",
+        "hiring node.js",
+        "node.js job",
+        "node.js remote",
+        "hiring senior developer",
+        "need senior developer",
+        "hiring frontend developer",
+        "hiring remote developer",
+        "football",
+      ],
+      "publishers": [ "ConsolePublisher" ]
+    }
+  ],
+
+  "publishers": [
+    {
+      "name": "ConsolePublisher",
+      "enabled": true
+    },
+    {
+      "name": "DiscordPublisher",
+      "enabled": true
+    }
+  ]
+}
+
+  

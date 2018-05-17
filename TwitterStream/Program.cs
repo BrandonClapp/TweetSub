@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Tweetinvi;
 
 namespace TwitterStream
@@ -18,21 +19,32 @@ namespace TwitterStream
             var user = User.GetAuthenticatedUser();         // user information
             var userSettings = user.GetAccountSettings();   // user settings information
 
-            var filters = GetFilters();
-            var stream = Tweetinvi.Stream.CreateFilteredStream();
-
-            foreach (var filter in filters)
+            var settings = LoadSettings();
+            var groupTasks = new List<Task>();
+            foreach (var group in settings.Groups)
             {
-                stream.AddTrack(filter);
+                var groupTask = Task.Run(async () =>
+                {
+                    var stream = Tweetinvi.Stream.CreateFilteredStream();
+
+                    foreach (var filter in group.Filters)
+                    {
+                        stream.AddTrack(filter);
+                    }
+
+                    stream.MatchingTweetReceived += (sender, tweetReceivedEvent) =>
+                    {
+                        // todo: publish to all group.Publishers
+                        Console.WriteLine(tweetReceivedEvent.Tweet);
+                    };
+
+                    await stream.StartStreamMatchingAnyConditionAsync();
+                });
+
+                groupTasks.Add(groupTask);
             }
 
-            stream.MatchingTweetReceived += (sender, tweetReceivedEvent) =>
-            {
-                // todo: add publishers to publish to console, discord, slack ...etc
-                Console.WriteLine(tweetReceivedEvent.Tweet);
-            };
-
-            stream.StartStreamMatchingAnyCondition();
+            Task.WaitAll(groupTasks.ToArray());
         }
 
         static Credentials GetUserCredentials()
@@ -52,10 +64,10 @@ namespace TwitterStream
             return credentials;
         }
 
-        static IEnumerable<string> GetFilters()
+        static Settings LoadSettings()
         {
-            var filters = JsonConvert.DeserializeObject<IEnumerable<string>>(File.ReadAllText("./tweet-filters.json"));
-            return filters;
+            var settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText("./settings.json"));
+            return settings;
         }
     }
 }

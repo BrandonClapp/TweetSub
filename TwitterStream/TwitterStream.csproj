@@ -8,7 +8,7 @@
   <ItemGroup>
     <None Remove="credentials.dev.json" />
     <None Remove="credentials.json" />
-    <None Remove="tweet-filters.json" />
+    <None Remove="settings.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,7 +18,7 @@
     <Content Include="credentials.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="tweet-filters.json">
+    <Content Include="settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
