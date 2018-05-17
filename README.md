@@ -10,7 +10,7 @@ Credentials for running the bot can be obtained at https://apps.twitter.com/
 ### Subscription Topics
 
 `tweet-filters.json` contains an array of strings. Each string represents a topic that you would like to subscribe to.
-Multiple words in the same topic are `AND`d together. 
+Multiple words in the same topic are `AND`'d together, so long as all words occur in the tweet. 
 Each additional topic added is `OR`'d together with the previous topics.
 
 i.e.
@@ -31,5 +31,5 @@ We are hiring an awesome .NET solutions developer to join our team.
 
 as well as
 ```
-I love baseball cards
+I love baseball cards!
 ```
