@@ -3,8 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Tweetinvi;
+using Tweetinvi.Streaming;
+using TwitterStream.Publishers;
 
 namespace TwitterStream
 {
@@ -32,11 +36,17 @@ namespace TwitterStream
                         stream.AddTrack(filter);
                     }
 
-                    stream.MatchingTweetReceived += (sender, tweetReceivedEvent) =>
+                    foreach (var publisher in group.Publishers)
                     {
-                        // todo: publish to all group.Publishers
-                        Console.WriteLine(tweetReceivedEvent.Tweet);
-                    };
+                        var pub = GetPublisher(publisher);
+
+                        stream.MatchingTweetReceived += (sender, argx) =>
+                        {
+                            pub.Publish(
+                                new Publishers.Tweet() { Message = argx.Tweet.ToString() }
+                            );
+                        };
+                    }
 
                     await stream.StartStreamMatchingAnyConditionAsync();
                 });
@@ -45,6 +55,16 @@ namespace TwitterStream
             }
 
             Task.WaitAll(groupTasks.ToArray());
+        }
+
+        static ITweetPublisher GetPublisher(string publisher)
+        {
+            var pubType = Assembly.GetExecutingAssembly()
+                .GetExportedTypes()
+                .First(t => t.FullName.EndsWith(publisher));
+
+            var instance = (ITweetPublisher)Activator.CreateInstance(pubType);
+            return instance;
         }
 
         static Credentials GetUserCredentials()
