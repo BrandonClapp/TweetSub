@@ -12,7 +12,7 @@
         "ASP.NET remote",
         "basketball",
       ],
-      "publishers": [ "ConsolePublisher" ]
+      "publishers": [ "BlueConsolePublisher" ]
     },
     {
       "enabled": true,
@@ -30,7 +30,7 @@
         "hiring remote developer",
         "football",
       ],
-      "publishers": [ "ConsolePublisher" ]
+      "publishers": [ "RedConsolePublisher" ]
     }
   ],
 
