@@ -28,8 +28,17 @@ namespace TwitterStream.Publishers
 
         public void Publish(Tweet tweet)
         {
-            var msg = $"**{tweet.ScreenName}**: {tweet.Message} {tweet.Url}";
-            _client.SendMessageAsync(msg).Wait();
+            try
+            {
+                var msg = $"**{tweet.ScreenName}**: {tweet.Message} {tweet.Url}";
+                _client.SendMessageAsync(msg).Wait();
+            }
+            catch
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Could not post message to Discord. Continuing.");
+            }
+            
         }
     }
 }
