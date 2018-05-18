@@ -8,5 +8,7 @@ namespace TwitterStream
     {
         public string Message { get; set; }
         public bool IsRetweet { get; set; }
+        public string ScreenName { get; set; }
+        public string Url { get; set; }
     }
 }

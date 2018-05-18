@@ -1,16 +1,13 @@
 ﻿{
   "publishers": [
     {
-      "name": "BlueConsolePublisher",
-      "enabled": true
+      "name": "BlueConsolePublisher"
     },
     {
-      "name": "RedConsolePublisher",
-      "enabled": true
+      "name": "RedConsolePublisher"
     },
     {
       "name": "DiscordPublisher",
-      "enabled": false,
       "data": {
         "channelId": 123,
         "token": "ABCDEFG"

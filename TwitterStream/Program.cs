@@ -14,8 +14,8 @@ namespace TwitterStream
 
             Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret, credentials.UserAccessToken, credentials.UserAccessSecret);
 
-            var user = User.GetAuthenticatedUser();         // user information
-            var userSettings = user.GetAccountSettings();   // user settings information
+            //var user = User.GetAuthenticatedUser();         // user information
+            //var userSettings = user.GetAccountSettings();   // user settings information
 
             var subscription = ConfigManager.LoadConfig<TwitterSubscription>();
 
@@ -24,13 +24,24 @@ namespace TwitterStream
             var groupTasks = new List<Task>();
             foreach (var group in subscription.Groups)
             {
+                if (!group.Enabled)
+                    continue;
+
                 var groupTask = Task.Run(async () =>
                 {
                     var stream = Tweetinvi.Stream.CreateFilteredStream();
 
-                    foreach (var filter in group.Filters)
+                    // Subscribe to group topics.
+                    foreach (var topic in group.Topics)
                     {
-                        stream.AddTrack(filter);
+                        stream.AddTrack(topic);
+                    }
+
+                    // Subscribe to group users.
+                    foreach (var userName in group.Users)
+                    {
+                        var user = User.GetUserFromScreenName(userName);
+                        stream.AddFollow(user);
                     }
 
                     foreach (var publisherName in group.Publishers)
@@ -42,7 +53,9 @@ namespace TwitterStream
                                 var tweet = new Tweet()
                                 {
                                     Message = argx.Tweet.ToString(),
-                                    IsRetweet = argx.Tweet.IsRetweet
+                                    IsRetweet = argx.Tweet.IsRetweet,
+                                    ScreenName = argx.Tweet.CreatedBy.ScreenName,
+                                    Url = argx.Tweet.Url
                                 };
 
                                 TweetDispatcher.Dispatch(tweet, pub);

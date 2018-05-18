@@ -28,7 +28,8 @@ namespace TwitterStream.Publishers
 
         public void Publish(Tweet tweet)
         {
-            _client.SendMessageAsync(tweet.Message).Wait();
+            var msg = $"**{tweet.ScreenName}**: {tweet.Message} {tweet.Url}";
+            _client.SendMessageAsync(msg).Wait();
         }
     }
 }

@@ -9,11 +9,12 @@ namespace TwitterStream.Publishers
     {
         public void Init(PublisherConfig config)
         {
-            Console.ForegroundColor = ConsoleColor.Blue;
+            
         }
 
         public void Publish(Tweet tweet)
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(tweet.Message);
         }
     }

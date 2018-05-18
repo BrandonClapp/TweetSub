@@ -14,7 +14,8 @@ namespace TwitterStream.Config
     {
         public bool Enabled { get; set; }
         public string Identity { get; set; }
-        public IEnumerable<string> Filters { get; set; }
+        public IEnumerable<string> Users { get; set; }
+        public IEnumerable<string> Topics { get; set; }
         public IEnumerable<string> Publishers { get; set; }
     }
 

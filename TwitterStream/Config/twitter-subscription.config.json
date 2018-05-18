@@ -2,19 +2,25 @@
   "groups": [
     {
       "enabled": true,
-      "identity": "fishing",
-      "filters": [
-        "fishing boat", // Multiple words are AND'd together. Tweet must contain all parts.
-        "bass fishing"  // Each individual filter is an additional OR to the overall filter.
+      "identity": "outdoor",
+      "topics": [
+        "fishing", // Multiple words are AND'd together. Tweet must contain all parts.
+        "hunting" // Each individual filter is an additional OR to the overall filter.
+      ],
+      "users": [
+        "BrandonClapp"
       ],
       "publishers": [ "BlueConsolePublisher", "DiscordPublisher" ]
     },
     {
       "enabled": true,
       "identity": "sports",
-      "filters": [
+      "topics": [
         "water polo",
-        "golf"
+        "hockey"
+      ],
+      "users": [
+        "BrandonClapp"
       ],
       "publishers": [ "RedConsolePublisher" ]
     }
