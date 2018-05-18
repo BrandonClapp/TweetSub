@@ -1,17 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Tweetinvi;
-using Tweetinvi.Streaming;
 using TwitterStream.Config;
-using TwitterStream.Config.Extentions;
-using TwitterStream.Config.Objects;
-using TwitterStream.Publishers;
 
 namespace TwitterStream
 {
@@ -19,17 +10,19 @@ namespace TwitterStream
     {
         static void Main(string[] args)
         {
-            var credentials = LoadConfig<TwitterCredentials>("twitter");
+            var credentials = ConfigManager.LoadConfig<TwitterCredentials>();
 
             Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret, credentials.UserAccessToken, credentials.UserAccessSecret);
 
             var user = User.GetAuthenticatedUser();         // user information
             var userSettings = user.GetAccountSettings();   // user settings information
 
-            var settings = LoadConfig<Settings>("settings");
+            var subscription = ConfigManager.LoadConfig<TwitterSubscription>();
+
+            var publishers = PublisherFactory.GetRegistered();
 
             var groupTasks = new List<Task>();
-            foreach (var group in settings.Groups)
+            foreach (var group in subscription.Groups)
             {
                 var groupTask = Task.Run(async () =>
                 {
@@ -40,9 +33,9 @@ namespace TwitterStream
                         stream.AddTrack(filter);
                     }
 
-                    foreach (var publisher in group.Publishers)
+                    foreach (var publisherName in group.Publishers)
                     {
-                        var pub = PublisherFactory.Create(publisher);
+                        var pub = publishers[publisherName];
 
                         stream.MatchingTweetReceived += (sender, argx) =>
                         {
@@ -60,17 +53,6 @@ namespace TwitterStream
 
             Task.WaitAll(groupTasks.ToArray());
         }
-
-        // Load a config file from the Config directory and deserialize it to a specified type (T).
-        // Loading config will prefer a ".dev.config.json" file, otherwise will use the ".config.json" version.
-        static T LoadConfig<T>(string file, bool allowEmptySettings = false) where T : IConfigurable
-        {
-            var config = JsonConvert.DeserializeObject<T>(
-                File.Exists($"./Config/{file}.dev.config.json") ? File.ReadAllText($"./Config/{file}.dev.config.json")
-                    : File.ReadAllText($"./Config/{file}.config.json")
-                );
-
-            return allowEmptySettings ? config : config.AssertAllConfigured<T>();
-        }
+        
     }
 }

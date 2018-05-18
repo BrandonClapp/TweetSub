@@ -4,8 +4,7 @@ using System.Text;
 
 namespace TwitterStream.Config.Objects
 {
-    public interface IConfigurable
+    public interface IConfigurableCollection : ICollection<IConfigurable>
     {
-        
     }
 }

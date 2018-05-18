@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TwitterStream.Config.Objects;
 
 namespace TwitterStream.Publishers
 {
@@ -10,14 +11,19 @@ namespace TwitterStream.Publishers
     {
         private DiscordWebhookClient _client;
 
-        public void Init(dynamic config = null)
+        public void Init(PublisherConfig config)
         {
-            if (config == null || config.token == null || config.channelId == null)
+            if (config == null || config.Data == null)
             {
-                throw new ArgumentNullException("Discord publisher requires channel id and token to be configured.");
+                throw new ArgumentNullException("Configuration data is required for the Discord publisher.");
             }
 
-            _client = new DiscordWebhookClient((ulong)config.channelId, (string)config.token);
+            if (config.Data.channelId == null || config.Data.token == null)
+            {
+                throw new ArgumentNullException("Discord publisher requires channelId and token to be configured.");
+            }
+
+            _client = new DiscordWebhookClient((ulong)config.Data.channelId, (string)config.Data.token);
         }
 
         public void Publish(Tweet tweet)

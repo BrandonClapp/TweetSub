@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterStream", "TwitterStream\TwitterStream.csproj", "{D767A9CF-83CB-4E9D-BB53-57A320E463E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterStream", "TwitterStream\TwitterStream.csproj", "{D767A9CF-83CB-4E9D-BB53-57A320E463E4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D5B651B2-AC3F-4679-A51F-887086751DF9}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterStream.Tests", "TwitterStream.Tests\TwitterStream.Tests.csproj", "{5C8B2A90-FD0E-4455-BDF5-D80695E64A8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwitterStream.Tests", "TwitterStream.Tests\TwitterStream.Tests.csproj", "{5C8B2A90-FD0E-4455-BDF5-D80695E64A8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -5,10 +5,9 @@ using TwitterStream.Config.Objects;
 
 namespace TwitterStream.Config
 {
-    public class Settings : IConfigurable
+    public class TwitterSubscription : IConfigurable
     {
         public IEnumerable<Group> Groups { get; set; }
-        public IEnumerable<Publisher> Publishers { get; set; }
     }
 
     public class Group
@@ -19,9 +18,4 @@ namespace TwitterStream.Config
         public IEnumerable<string> Publishers { get; set; }
     }
 
-    public class Publisher
-    {
-        public string Name { get; set; }
-        public bool Enabled { get; set; }
-    }
 }

@@ -8,7 +8,7 @@
   <ItemGroup>
     <None Remove="Config\publishers.config.json" />
     <None Remove="Config\publishers.dev.config.json" />
-    <None Remove="Config\settings.config.json" />
+    <None Remove="Config\twitter-subscription.config.json" />
     <None Remove="credentials.config" />
     <None Remove="credentials.dev.config" />
     <None Remove="settings.json" />
@@ -21,16 +21,16 @@
     <Content Include="Config\publishers.dev.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Config\settings.config.json">
+    <Content Include="Config\twitter-subscription.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Config\twitter.dev.config.json">
+    <Content Include="Config\twitter-credentials.dev.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Config\twitter.config.json">
+    <Content Include="Config\twitter-credentials.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Config\settings.dev.config.json">
+    <Content Include="Config\twitter-subscription.dev.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

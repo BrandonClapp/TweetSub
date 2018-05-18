@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using TwitterStream.Config.Objects;
 
 namespace TwitterStream.Publishers
 {
     public class RedConsolePublisher : ITweetPublisher
     {
-        public void Init(dynamic config = null)
+        public void Init(PublisherConfig config)
         {
             Console.ForegroundColor = ConsoleColor.Red;
         }
 
         public void Publish(Tweet tweet)
         {
-            
             Console.WriteLine(tweet.Message);
         }
     }
