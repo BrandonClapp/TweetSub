@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Tweetinvi;
 using Tweetinvi.Streaming;
+using TwitterStream.Config;
+using TwitterStream.Config.Extentions;
 using TwitterStream.Publishers;
 
 namespace TwitterStream
@@ -16,14 +18,15 @@ namespace TwitterStream
     {
         static void Main(string[] args)
         {
-            var credentials = GetUserCredentials();
+            var credentials = LoadConfig<TwitterCredentials>("twitter").AssertAllConfigured<TwitterCredentials>();
 
             Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret, credentials.UserAccessToken, credentials.UserAccessSecret);
 
             var user = User.GetAuthenticatedUser();         // user information
             var userSettings = user.GetAccountSettings();   // user settings information
 
-            var settings = LoadSettings();
+            var settings = LoadConfig<Settings>("settings").AssertAllConfigured<Settings>();
+
             var groupTasks = new List<Task>();
             foreach (var group in settings.Groups)
             {
@@ -38,12 +41,12 @@ namespace TwitterStream
 
                     foreach (var publisher in group.Publishers)
                     {
-                        var pub = GetPublisher(publisher);
+                        var pub = PublisherFactory.Create(publisher);
 
                         stream.MatchingTweetReceived += (sender, argx) =>
                         {
                             pub.Publish(
-                                new Publishers.Tweet() { Message = argx.Tweet.ToString() }
+                                new Tweet() { Message = argx.Tweet.ToString() }
                             );
                         };
                     }
@@ -57,37 +60,16 @@ namespace TwitterStream
             Task.WaitAll(groupTasks.ToArray());
         }
 
-        static ITweetPublisher GetPublisher(string publisher)
+        // Load a config file from the Config directory and deserialize it to a specified type (T).
+        // Loading config will prefer a ".dev.config.json" file, otherwise will use the ".config.json" version.
+        static T LoadConfig<T>(string file)
         {
-            var pubType = Assembly.GetExecutingAssembly()
-                .GetExportedTypes()
-                .First(t => t.FullName.EndsWith(publisher));
-
-            var instance = (ITweetPublisher)Activator.CreateInstance(pubType);
-            return instance;
-        }
-
-        static Credentials GetUserCredentials()
-        {
-            var credentials = JsonConvert.DeserializeObject<Credentials>(
-                File.Exists("./credentials.json") ? File.ReadAllText("./credentials.json")
-                    : File.ReadAllText("./credentials.dev.json")
+            var config = JsonConvert.DeserializeObject<T>(
+                File.Exists($"./Config/{file}.dev.config.json") ? File.ReadAllText($"./Config/{file}.dev.config.json")
+                    : File.ReadAllText($"./Config/{file}.config.json")
                 );
 
-            foreach (var prop in credentials.GetType().GetProperties())
-            {
-                var value = (string)prop.GetValue(credentials);
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentException("Fill in all authentication values in credentials.json or credentials.dev.json");
-            }
-
-            return credentials;
-        }
-
-        static Settings LoadSettings()
-        {
-            var settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText("./settings.json"));
-            return settings;
+            return config;
         }
     }
 }

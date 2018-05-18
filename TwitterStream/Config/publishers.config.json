@@ -1,0 +1,18 @@
+﻿[
+  {
+    "name": "BlueConsolePublisher",
+    "enabled": true
+  },
+  {
+    "name": "RedConsolePublisher",
+    "enabled": true
+  },
+  {
+    "name": "DiscordPublisher",
+    "enabled": false,
+    "config": {
+      "channelId": 123,
+      "token": "ABCDEFG"
+    }
+  }
+]

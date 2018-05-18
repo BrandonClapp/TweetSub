@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TwitterStream.Config.Objects;
 
-namespace TwitterStream
+namespace TwitterStream.Config
 {
-    public class Settings
+    public class Settings : IConfigurable
     {
         public IEnumerable<Group> Groups { get; set; }
         public IEnumerable<Publisher> Publishers { get; set; }

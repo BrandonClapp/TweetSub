@@ -6,24 +6,37 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="credentials.dev.json" />
-    <None Remove="credentials.json" />
+    <None Remove="Config\publishers.config.json" />
+    <None Remove="Config\publishers.dev.config.json" />
+    <None Remove="Config\settings.config.json" />
+    <None Remove="credentials.config" />
+    <None Remove="credentials.dev.config" />
     <None Remove="settings.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="credentials.dev.json">
+    <Content Include="Config\publishers.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="credentials.json">
+    <Content Include="Config\publishers.dev.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="settings.json">
+    <Content Include="Config\settings.config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\twitter.dev.config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\twitter.config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\settings.dev.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Discord.Net.Webhook" Version="1.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="TweetinviAPI" Version="3.0.0" />
   </ItemGroup>

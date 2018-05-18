@@ -1,0 +1,24 @@
+﻿{
+  "groups": [
+    {
+      "enabled": true,
+      "identity": "fishing",
+      "filters": [
+        "fishing boat", // Multiple words are AND'd together. Tweet must contain all parts.
+        "bass fishing"  // Each individual filter is an additional OR to the overall filter.
+      ],
+      "publishers": [ "BlueConsolePublisher", "DiscordPublisher" ]
+    },
+    {
+      "enabled": true,
+      "identity": "sports",
+      "filters": [
+        "water polo",
+        "golf"
+      ],
+      "publishers": [ "RedConsolePublisher" ]
+    }
+  ]
+}
+
+  
