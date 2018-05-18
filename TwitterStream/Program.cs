@@ -19,7 +19,7 @@ namespace TwitterStream
 
             var subscription = ConfigManager.LoadConfig<TwitterSubscription>();
 
-            var publishers = PublisherFactory.GetRegistered();
+            PublisherFactory.LoadRegistered();
 
             var groupTasks = new List<Task>();
             foreach (var group in subscription.Groups)
@@ -35,14 +35,19 @@ namespace TwitterStream
 
                     foreach (var publisherName in group.Publishers)
                     {
-                        var pub = publishers[publisherName];
-
-                        stream.MatchingTweetReceived += (sender, argx) =>
+                        if (PublisherFactory.TryGetPublisher(publisherName, out var pub))
                         {
-                            pub.Publish(
-                                new Tweet() { Message = argx.Tweet.ToString() }
-                            );
-                        };
+                            stream.MatchingTweetReceived += (sender, argx) =>
+                            {
+                                var tweet = new Tweet()
+                                {
+                                    Message = argx.Tweet.ToString(),
+                                    IsRetweet = argx.Tweet.IsRetweet
+                                };
+
+                                TweetDispatcher.Dispatch(tweet, pub);
+                            };
+                        }   
                     }
 
                     await stream.StartStreamMatchingAnyConditionAsync();

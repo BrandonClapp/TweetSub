@@ -7,5 +7,6 @@ namespace TwitterStream
     public class Tweet
     {
         public string Message { get; set; }
+        public bool IsRetweet { get; set; }
     }
 }

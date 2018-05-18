@@ -8,21 +8,21 @@ namespace TwitterStream.Config.Extentions
 {
     public static class ConfigurationExtentions
     {
-        public static T AssertAllConfigured<T>(this IConfigurable configurable) where T : IConfigurable
+        public static T AssertAllConfigured<T>(this object obj)
         {
             foreach (var prop in typeof(T).GetProperties())
             {
                 // todo: if iterable, do deep check.
                 if (prop.GetType() == typeof(string))
                 {
-                    var value = prop.GetValue(configurable) as string;
+                    var value = prop.GetValue(obj) as string;
                     if (string.IsNullOrWhiteSpace(value))
                         throw new ArgumentException("Incomplete configuration.", prop.Name);
                 }
                 
             }
 
-            return (T)configurable;
+            return (T)obj;
         }
 
         public static string ToHypenCase(this string source)

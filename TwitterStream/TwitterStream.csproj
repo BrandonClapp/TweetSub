@@ -9,6 +9,7 @@
     <None Remove="Config\publishers.config.json" />
     <None Remove="Config\publishers.dev.config.json" />
     <None Remove="Config\twitter-subscription.config.json" />
+    <None Remove="Config\word-filter.config.json" />
     <None Remove="credentials.config" />
     <None Remove="credentials.dev.config" />
     <None Remove="settings.json" />
@@ -31,6 +32,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\twitter-subscription.dev.config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\word-filter.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

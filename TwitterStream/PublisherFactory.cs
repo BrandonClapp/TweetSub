@@ -13,11 +13,8 @@ namespace TwitterStream
 
         private static IDictionary<string, ITweetPublisher> _loadedPublishers;
 
-        public static IDictionary<string, ITweetPublisher> GetRegistered()
+        public static void LoadRegistered()
         {
-            if (_loadedPublishers != null)
-                return _loadedPublishers;
-
             var settings = ConfigManager.LoadConfig<PublisherRegistry>("publishers");
             var publishers = new Dictionary<string, PublisherConfig>();
 
@@ -41,7 +38,23 @@ namespace TwitterStream
             }
 
             _loadedPublishers = loadedPublishers;
-            return loadedPublishers;
+        }
+
+        public static IDictionary<string, ITweetPublisher> GetAllLoaded()
+        {
+            return _loadedPublishers;
+        }
+
+        public static bool TryGetPublisher(string publisherName, out ITweetPublisher pub)
+        {
+            if (_loadedPublishers == null)
+            {
+                throw new NullReferenceException("Publishers must be loaded before attempting to access them.");
+            }
+
+            _loadedPublishers.TryGetValue(publisherName, out pub);
+
+            return pub != null;
         }
 
         private static ITweetPublisher Create(string publisherName, PublisherConfig config)

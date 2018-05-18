@@ -10,8 +10,7 @@ namespace TwitterStream.Config
 {
     public static class ConfigManager
     {
-        public static T LoadConfig<T>(string file = null, bool allowEmptySettings = false) 
-            where T : IConfigurable, new()
+        public static T LoadConfig<T>(string file = null, bool allowEmptySettings = false)
         {
             if (file == null)
             {

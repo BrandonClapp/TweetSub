@@ -11,7 +11,7 @@
     {
       "name": "DiscordPublisher",
       "enabled": false,
-      "config": {
+      "data": {
         "channelId": 123,
         "token": "ABCDEFG"
       }
