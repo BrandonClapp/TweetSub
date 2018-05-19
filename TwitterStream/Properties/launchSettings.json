@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TwitterStream": {
+      "commandName": "Project",
+      "commandLineArgs": "-unfollow"
+    }
+  }
+}

@@ -15,8 +15,11 @@ namespace TwitterStream
 
             Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret, credentials.UserAccessToken, credentials.UserAccessSecret);
 
-            //var user = User.GetAuthenticatedUser();         // user information
-            //var userSettings = user.GetAccountSettings();   // user settings information
+            if (args.ToList().Any(arg => arg.ToLower() == "-uf" || arg.ToLower() == "-unfollow"))
+            {
+                Unfollower.Unfollow(); // Quick and dirty for now.
+                return;
+            }
 
             var subscription = ConfigManager.LoadConfig<TwitterSubscription>();
 
