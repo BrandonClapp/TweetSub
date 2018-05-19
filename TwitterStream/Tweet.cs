@@ -10,5 +10,6 @@ namespace TwitterStream
         public bool IsRetweet { get; set; }
         public string ScreenName { get; set; }
         public string Url { get; set; }
+        public int AuthorFollowers { get; set; }
     }
 }

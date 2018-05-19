@@ -14,6 +14,9 @@ namespace TwitterStream
             if (tweet.IsRetweet)
                 return;
 
+            if (tweet.AuthorFollowers < 10)
+                return; // attempt to cut down on spam.
+
             var encodedWords = ConfigManager.LoadConfig<string>("word-filter");
             var decodedString = Encoding.UTF8.GetString(Convert.FromBase64String(encodedWords));
 

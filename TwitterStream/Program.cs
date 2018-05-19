@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Tweetinvi;
+using Tweetinvi.Models;
 using TwitterStream.Config;
 
 namespace TwitterStream
@@ -10,7 +11,7 @@ namespace TwitterStream
     {
         static void Main(string[] args)
         {
-            var credentials = ConfigManager.LoadConfig<TwitterCredentials>();
+            var credentials = ConfigManager.LoadConfig<TwitterStream.Config.TwitterCredentials>();
 
             Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret, credentials.UserAccessToken, credentials.UserAccessSecret);
 
@@ -30,6 +31,7 @@ namespace TwitterStream
                 var groupTask = Task.Run(async () =>
                 {
                     var stream = Tweetinvi.Stream.CreateFilteredStream();
+                    stream.AddTweetLanguageFilter(LanguageFilter.English);
 
                     // Subscribe to group topics.
                     foreach (var topic in group.Topics)
@@ -53,9 +55,10 @@ namespace TwitterStream
                                 var tweet = new Tweet()
                                 {
                                     Message = argx.Tweet.ToString(),
-                                    IsRetweet = argx.Tweet.IsRetweet,
+                                    IsRetweet = argx.Tweet.IsRetweet || argx.Tweet.ToString().Contains("RT:"),
                                     ScreenName = argx.Tweet.CreatedBy.ScreenName,
-                                    Url = argx.Tweet.Url
+                                    Url = argx.Tweet.Url,
+                                    AuthorFollowers = argx.Tweet.CreatedBy.FollowersCount
                                 };
 
                                 TweetDispatcher.Dispatch(tweet, handler);

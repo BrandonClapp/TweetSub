@@ -4,13 +4,19 @@
       "enabled": true,
       "identity": "outdoor",
       "topics": [
-        "fishing", // Multiple words are AND'd together. Tweet must contain all parts.
-        "hunting" // Each individual filter is an additional OR to the overall filter.
+        "C#",
+        ".NET Core",
+        "ASPNET",
+        "Golang",
+        "Python program",
+        "Java program",
+        "Node.js",
+        "Nodejs"
       ],
       "users": [
         "BrandonClapp"
       ],
-      "handlers": [ "GreenConsolePublisher", "RegularConsolePublisher" ]
+      "handlers": [ "GreenConsolePublisher", "FollowTweeters" ]
     },
     {
       "enabled": false,

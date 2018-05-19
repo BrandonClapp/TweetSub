@@ -1,6 +1,13 @@
 ﻿{
   "handlers": [
     {
+      "name": "GreenConsolePublisher",
+      "type": "ConsolePublisher",
+      "data": {
+        "color": "Green"
+      }
+    },
+    {
       "name": "BlueConsolePublisher",
       "type": "ConsolePublisher",
       "data": {
@@ -26,6 +33,10 @@
         "channelId": 123,
         "token": "ABCDEFG"
       }
+    },
+    {
+      "name": "FollowTweeters",
+      "type": "FollowHandler"
     }
   ]
 }
