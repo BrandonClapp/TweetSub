@@ -7,7 +7,7 @@ namespace TwitterStream
 {
     public interface ITweetPublisher
     {
-        void Init(PublisherConfig config);
+        void Init(dynamic data);
         void Publish(Tweet tweet);
     }
 }

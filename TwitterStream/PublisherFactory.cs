@@ -8,36 +8,56 @@ using TwitterStream.Config.Objects;
 
 namespace TwitterStream
 {
+
+    internal class PublisherDetails
+    {
+        public PublisherDetails(string name, Type type, dynamic data)
+        {
+            Name = name;
+            Type = type;
+            Data = data;
+        }
+
+        public string Name { get; set; }
+        public Type Type { get; set; }
+        public dynamic Data { get; set; }
+    }
+
     public static class PublisherFactory
     {
 
-        private static IDictionary<string, ITweetPublisher> _loadedPublishers;
+        private static IDictionary<string, ITweetPublisher> _loadedPublishers = new Dictionary<string, ITweetPublisher>();
 
         public static void LoadRegistered()
         {
+            _loadedPublishers.Clear();
+
             var settings = ConfigManager.LoadConfig<PublisherRegistry>("publishers");
-            var publishers = new Dictionary<string, PublisherConfig>();
+            var publishers = new List<PublisherConfig>();
 
-            var types = Assembly.GetExecutingAssembly().GetTypes();
-            foreach (var type in types)
+            var publisherDetails = new List<PublisherDetails>();
+
+            var assemblyTypes = Assembly.GetExecutingAssembly().GetTypes();
+            foreach (var publisher in settings.Publishers)
             {
-                var isPublisher = typeof(ITweetPublisher).IsAssignableFrom(type) 
-                    && typeof(ITweetPublisher).Name != type.Name;
+                var name = publisher.Name;
+                var correctType = assemblyTypes.First(t => {
+                    return t.Name == publisher.Type && 
+                        typeof(ITweetPublisher).IsAssignableFrom(t) &&
+                        typeof(ITweetPublisher).Name != t.Name;
+                });
 
-                if (isPublisher)
-                {
-                    PublisherConfig pubSettings = settings.Publishers.FirstOrDefault(p => p.Name == type.Name);
-                    publishers.Add(type.Name, pubSettings);
-                }
+                var data = publisher.Data;
+
+                PublisherDetails details = new PublisherDetails(name, correctType, data);
+                publisherDetails.Add(details);
             }
 
-            var loadedPublishers = new Dictionary<string, ITweetPublisher>();
-            foreach (var publisher in publishers)
+            foreach (var details in publisherDetails)
             {
-                loadedPublishers.Add(publisher.Key, Create(publisher.Key, publisher.Value));
+                ITweetPublisher createdPub = Create(details.Type, details.Data);
+                _loadedPublishers.Add(details.Name, createdPub);
             }
-
-            _loadedPublishers = loadedPublishers;
         }
 
         public static IDictionary<string, ITweetPublisher> GetAllLoaded()
@@ -57,15 +77,10 @@ namespace TwitterStream
             return pub != null;
         }
 
-        private static ITweetPublisher Create(string publisherName, PublisherConfig config)
+        private static ITweetPublisher Create(Type publisherType, dynamic data)
         {
-            var pubType = Assembly.GetExecutingAssembly()
-                .GetExportedTypes()
-                .First(t => t.FullName.EndsWith(publisherName));
-
-            var instance = (ITweetPublisher)Activator.CreateInstance(pubType);
-            //_loadedPublishers.TryGetValue(publisherName, out var pubSettings);
-            instance.Init(config);
+            var instance = (ITweetPublisher)Activator.CreateInstance(publisherType);
+            instance.Init(data);
             return instance;
         }
     }

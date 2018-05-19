@@ -11,19 +11,19 @@ namespace TwitterStream.Publishers
     {
         private DiscordWebhookClient _client;
 
-        public void Init(PublisherConfig config)
+        public void Init(dynamic data)
         {
-            if (config == null || config.Data == null)
+            if (data == null)
             {
                 throw new ArgumentNullException("Configuration data is required for the Discord publisher.");
             }
 
-            if (config.Data.channelId == null || config.Data.token == null)
+            if (data.channelId == null || data.token == null)
             {
                 throw new ArgumentNullException("Discord publisher requires channelId and token to be configured.");
             }
 
-            _client = new DiscordWebhookClient((ulong)config.Data.channelId, (string)config.Data.token);
+            _client = new DiscordWebhookClient((ulong)data.channelId, (string)data.token);
         }
 
         public void Publish(Tweet tweet)

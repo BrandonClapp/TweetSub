@@ -10,10 +10,10 @@
       "users": [
         "BrandonClapp"
       ],
-      "publishers": [ "BlueConsolePublisher", "DiscordPublisher" ]
+      "publishers": [ "GreenConsolePublisher", "RegularConsolePublisher" ]
     },
     {
-      "enabled": true,
+      "enabled": false,
       "identity": "sports",
       "topics": [
         "water polo",
@@ -22,7 +22,7 @@
       "users": [
         "BrandonClapp"
       ],
-      "publishers": [ "RedConsolePublisher" ]
+      "publishers": [ "BlueConsolePublisher", "TestChannelDiscordPublisher" ]
     }
   ]
 }

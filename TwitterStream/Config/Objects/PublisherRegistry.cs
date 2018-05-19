@@ -12,6 +12,7 @@ namespace TwitterStream.Config.Objects
     public class PublisherConfig
     {
         public string Name { get; set; }
+        public string Type { get; set; }
         public dynamic Data { get; set; }
     }
 }

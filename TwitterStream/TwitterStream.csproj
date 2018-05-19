@@ -31,9 +31,6 @@
     <Content Include="Config\twitter-credentials.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Config\twitter-subscription.dev.config.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Config\word-filter.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
