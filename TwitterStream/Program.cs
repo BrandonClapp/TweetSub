@@ -72,7 +72,7 @@ namespace TwitterStream
                 groupTasks.Add(groupTask);
             }
 
-            Task.WaitAll(groupTasks.ToArray());
+            Task.WaitAll(groupTasks.ToArray()); // todo: add cancelation token.
         }
         
     }
