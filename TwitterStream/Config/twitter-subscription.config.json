@@ -16,7 +16,7 @@
       "users": [
         "BrandonClapp"
       ],
-      "handlers": [ "GreenConsolePublisher", "FollowTweeters" ]
+      "handlers": [ "GreenConsolePublisher", "FollowTweeters", "TestChannelDiscordPublisher" ]
     },
     {
       "enabled": false,
