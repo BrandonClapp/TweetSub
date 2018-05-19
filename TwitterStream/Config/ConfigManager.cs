@@ -17,10 +17,22 @@ namespace TwitterStream.Config
                 file = typeof(T).Name.ToHypenCase().ToLower();
             }
 
-            var config = JsonConvert.DeserializeObject<T>(
-                File.Exists($"./Config/{file}.dev.config.json") ? File.ReadAllText($"./Config/{file}.dev.config.json")
-                    : File.ReadAllText($"./Config/{file}.config.json")
-                );
+            T config = default(T);
+            try
+            {
+                config = JsonConvert.DeserializeObject<T>(
+                    File.Exists($"./Config/{file}.dev.config.json") ? File.ReadAllText($"./Config/{file}.dev.config.json")
+                        : File.ReadAllText($"./Config/{file}.config.json")
+                    );
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new FileNotFoundException($"Ensure that ./Config/{file}.dev.config.json or ./Config/{file}.config.json exist.", ex);
+            }
+            catch (JsonSerializationException ex)
+            {
+                throw new JsonSerializationException($"Could not serialize settings from '{file}' to type {typeof(T)}", ex);
+            } 
 
             if (!allowEmptySettings)
             {

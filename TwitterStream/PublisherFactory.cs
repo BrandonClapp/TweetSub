@@ -9,22 +9,22 @@ using TwitterStream.Config.Objects;
 namespace TwitterStream
 {
 
-    internal class PublisherDetails
-    {
-        public PublisherDetails(string name, Type type, dynamic data)
-        {
-            Name = name;
-            Type = type;
-            Data = data;
-        }
-
-        public string Name { get; set; }
-        public Type Type { get; set; }
-        public dynamic Data { get; set; }
-    }
-
     public static class PublisherFactory
     {
+        // Local class to make instantiation easier.
+        private class PublisherDetails
+        {
+            public PublisherDetails(string name, Type type, dynamic data)
+            {
+                Name = name;
+                Type = type;
+                Data = data;
+            }
+
+            public string Name { get; set; }
+            public Type Type { get; set; }
+            public dynamic Data { get; set; }
+        }
 
         private static IDictionary<string, ITweetPublisher> _loadedPublishers = new Dictionary<string, ITweetPublisher>();
 
@@ -41,11 +41,19 @@ namespace TwitterStream
             foreach (var publisher in settings.Publishers)
             {
                 var name = publisher.Name;
-                var correctType = assemblyTypes.First(t => {
-                    return t.Name == publisher.Type && 
-                        typeof(ITweetPublisher).IsAssignableFrom(t) &&
-                        typeof(ITweetPublisher).Name != t.Name;
-                });
+                Type correctType = null;
+                try
+                {
+                    correctType = assemblyTypes.First(t => {
+                        return t.Name == publisher.Type &&
+                            typeof(ITweetPublisher).IsAssignableFrom(t) &&
+                            typeof(ITweetPublisher).Name != t.Name;
+                    });
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException($"Could not find tweet publisher type for '{publisher.Type}'", ex);
+                }
 
                 var data = publisher.Data;
 
