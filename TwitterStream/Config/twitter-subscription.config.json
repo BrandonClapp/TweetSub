@@ -2,33 +2,41 @@
   "groups": [
     {
       "enabled": true,
-      "identity": "outdoor",
+      "identity": "dev",
       "topics": [
-        "C#",
-        ".NET Core",
-        "ASPNET",
-        "Golang",
-        "Python program",
-        "Java program",
-        "Node.js",
-        "Nodejs"
+        "#nodejs",
+        "#node",
+        "#webdev",
+        "#java",
+        "#javascript",
+        "#angular",
+        "#react",
+        "#php",
+        "#developer",
+        "#git",
+        "#github",
+        "#web",
+        "#sql",
+        "#graphql",
+        "#aspnet",
+        "#dotnet",
+        "#csharp",
+        "#netcore",
+        "#golang",
+        "#python",
+        "monogame",
+        "#ruby",
+        "#rubyonrails",
+        "#programming",
+        "#devops",
+        "#microservices",
+        "#vuejs",
+        "#cpp"
       ],
       "users": [
         "BrandonClapp"
       ],
       "handlers": [ "GreenConsolePublisher", "FollowTweeters", "TestChannelDiscordPublisher" ]
-    },
-    {
-      "enabled": false,
-      "identity": "sports",
-      "topics": [
-        "water polo",
-        "hockey"
-      ],
-      "users": [
-        "BrandonClapp"
-      ],
-      "handlers": [ "BlueConsolePublisher", "TestChannelDiscordPublisher" ]
     }
   ]
 }

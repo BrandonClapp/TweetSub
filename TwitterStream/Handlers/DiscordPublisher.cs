@@ -30,7 +30,7 @@ namespace TwitterStream.Handlers
         {
             try
             {
-                var msg = $"**{tweet.ScreenName}**: {tweet.Message} {tweet.Url}";
+                var msg = $"{tweet.Url}";
                 _client.SendMessageAsync(msg).Wait();
             }
             catch

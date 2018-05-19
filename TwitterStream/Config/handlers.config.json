@@ -27,16 +27,16 @@
       // no data
     },
     {
+      "name": "FollowTweeters",
+      "type": "FollowHandler"
+    },
+    {
       "name": "TestChannelDiscordPublisher",
       "type": "DiscordPublisher",
       "data": {
         "channelId": 123,
         "token": "ABCDEFG"
       }
-    },
-    {
-      "name": "FollowTweeters",
-      "type": "FollowHandler"
     }
   ]
 }
