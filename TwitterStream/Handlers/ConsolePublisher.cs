@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using TwitterStream.Config.Objects;
 
-namespace TwitterStream.Publishers
+namespace TwitterStream.Handlers
 {
-    public class ConsolePublisher : ITweetPublisher
+    public class ConsolePublisher : ITweetHandler
     {
         private ConsoleColor Color = ConsoleColor.White;
 
@@ -21,7 +21,7 @@ namespace TwitterStream.Publishers
             Color = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color);
         }
 
-        public void Publish(Tweet tweet)
+        public void Handle(Tweet tweet)
         {
             Console.ForegroundColor = Color;
             Console.WriteLine(tweet.Message);

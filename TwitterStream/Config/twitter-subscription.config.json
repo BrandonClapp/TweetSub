@@ -10,7 +10,7 @@
       "users": [
         "BrandonClapp"
       ],
-      "publishers": [ "GreenConsolePublisher", "RegularConsolePublisher" ]
+      "handlers": [ "GreenConsolePublisher", "RegularConsolePublisher" ]
     },
     {
       "enabled": false,
@@ -22,7 +22,7 @@
       "users": [
         "BrandonClapp"
       ],
-      "publishers": [ "BlueConsolePublisher", "TestChannelDiscordPublisher" ]
+      "handlers": [ "BlueConsolePublisher", "TestChannelDiscordPublisher" ]
     }
   ]
 }

@@ -5,9 +5,9 @@ using TwitterStream.Config.Objects;
 
 namespace TwitterStream
 {
-    public interface ITweetPublisher
+    public interface ITweetHandler
     {
         void Init(dynamic data);
-        void Publish(Tweet tweet);
+        void Handle(Tweet tweet);
     }
 }

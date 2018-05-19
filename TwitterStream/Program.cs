@@ -19,7 +19,7 @@ namespace TwitterStream
 
             var subscription = ConfigManager.LoadConfig<TwitterSubscription>();
 
-            PublisherFactory.LoadRegistered();
+            HandlerFactory.LoadRegistered();
 
             var groupTasks = new List<Task>();
             foreach (var group in subscription.Groups)
@@ -44,9 +44,9 @@ namespace TwitterStream
                         stream.AddFollow(user);
                     }
 
-                    foreach (var publisherName in group.Publishers)
+                    foreach (var handlerName in group.Handlers)
                     {
-                        if (PublisherFactory.TryGetPublisher(publisherName, out var pub))
+                        if (HandlerFactory.TryGetHandler(handlerName, out var handler))
                         {
                             stream.MatchingTweetReceived += (sender, argx) =>
                             {
@@ -58,7 +58,7 @@ namespace TwitterStream
                                     Url = argx.Tweet.Url
                                 };
 
-                                TweetDispatcher.Dispatch(tweet, pub);
+                                TweetDispatcher.Dispatch(tweet, handler);
                             };
                         }   
                     }

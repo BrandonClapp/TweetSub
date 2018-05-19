@@ -9,7 +9,7 @@ namespace TwitterStream
 {
     public static class TweetDispatcher
     {
-        public static void Dispatch(Tweet tweet, ITweetPublisher publisher)
+        public static void Dispatch(Tweet tweet, ITweetHandler handler)
         {
             if (tweet.IsRetweet)
                 return;
@@ -28,7 +28,7 @@ namespace TwitterStream
                 return;
             }
 
-            publisher.Publish(tweet);
+            handler.Handle(tweet);
         }
     }
 }

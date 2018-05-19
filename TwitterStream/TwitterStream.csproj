@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Config\publishers.config.json" />
-    <None Remove="Config\publishers.dev.config.json" />
+    <None Remove="Config\handlers.config.json" />
+    <None Remove="Config\handlers.dev.config.json" />
     <None Remove="Config\twitter-subscription.config.json" />
     <None Remove="Config\word-filter.config.json" />
     <None Remove="credentials.config" />
@@ -16,10 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Config\publishers.config.json">
+    <Content Include="Config\handlers.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Config\publishers.dev.config.json">
+    <Content Include="Config\handlers.dev.config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\twitter-subscription.config.json">

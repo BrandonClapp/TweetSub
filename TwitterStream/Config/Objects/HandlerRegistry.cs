@@ -4,12 +4,12 @@ using System.Text;
 
 namespace TwitterStream.Config.Objects
 {
-    public class PublisherRegistry : IConfigurable
+    public class HandlerRegistry : IConfigurable
     {
-        public IEnumerable<PublisherConfig> Publishers { get; set; }
+        public IEnumerable<HandlerConfig> Handlers { get; set; }
     }
 
-    public class PublisherConfig
+    public class HandlerConfig
     {
         public string Name { get; set; }
         public string Type { get; set; }

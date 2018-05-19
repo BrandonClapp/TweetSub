@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TwitterStream.Config.Objects;
 
-namespace TwitterStream.Publishers
+namespace TwitterStream.Handlers
 {
-    public class DiscordPublisher : ITweetPublisher
+    public class DiscordPublisher : ITweetHandler
     {
         private DiscordWebhookClient _client;
 
@@ -26,7 +26,7 @@ namespace TwitterStream.Publishers
             _client = new DiscordWebhookClient((ulong)data.channelId, (string)data.token);
         }
 
-        public void Publish(Tweet tweet)
+        public void Handle(Tweet tweet)
         {
             try
             {
